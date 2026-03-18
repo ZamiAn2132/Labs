@@ -1,5 +1,3 @@
-Lab 10: 
-
 import os
 import asyncio
 from pathlib import Path
@@ -33,8 +31,8 @@ async def process_expenses_data(prompt, expenses_data):
 
     # Create a chat agent
     async with (
-        AzureCliCredential() as AzureCliCredential,
-        ChatAgent(
+        AzureCliCredential() as credential,
+        Agent(
             chat_client=AzureAIAgentClient(credential=credential),
             name="expenses_agent",
             instructions="""You are an AI assistant for expense claim submission.
@@ -61,14 +59,14 @@ async def process_expenses_data(prompt, expenses_data):
 
 
 
-# Create a tool function for the email functionality
-def send_email(
-to: Annotated[str, Field(description="Who to send the email to")],
-subject: Annotated[str, Field(description="The subject of the email.")],
-body: Annotated[str, Field(description="The text body of the email.")]):
-    print("\nTo:", to)
-    print("Subject:", subject)
-    print(body, "\n")
+    # Create a tool function for the email functionality
+    def send_email(
+    to: Annotated[str, Field(description="Who to send the email to")],
+    subject: Annotated[str, Field(description="The subject of the email.")],
+    body: Annotated[str, Field(description="The text body of the email.")]):
+        print("\nTo:", to)
+        print("Subject:", subject)
+        print(body, "\n")
 
 
 
